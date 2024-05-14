@@ -3,6 +3,7 @@ package co.develhope.APIInterceptorMiddleware02.Features;
 import io.micrometer.common.lang.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,8 +28,8 @@ public class MonthInterceptor implements HandlerInterceptor {
                 return false;
             } else {
                 int month = Integer.parseInt(monthNumber);
-                Month foundMonth = monthList.stream().filter(m -> m.getMonthNumber() == month).findFirst().orElse(new Month(0, "nope", "nope", "nope"));
-                request.setAttribute("month", foundMonth);
+                Month monthFound = monthList.stream().filter(m -> m.getMonthNumber() == month).findFirst().orElse(new Month(0, "none", "nessuno", "nicht"));
+                request.setAttribute("month", monthFound);
                 response.setStatus(HttpServletResponse.SC_OK);
                 return true;
             }
@@ -37,7 +38,7 @@ public class MonthInterceptor implements HandlerInterceptor {
         }
     }
 
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, @NotNull Object handler, @Nullable ModelAndView modelAndView) throws Exception {
     }
 
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) throws Exception {
